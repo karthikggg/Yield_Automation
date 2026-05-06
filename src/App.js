@@ -14,10 +14,10 @@ function App() {
       <Header />
      
         <Routes>
-          <Route path="/episodes-change" element={<EPISODESCHANGE />} />
+          {/* <Route path="/episodes-change" element={<EPISODESCHANGE />} />
           <Route path="/rates-apply" element={<RATESAPPLY />} />
-          <Route path="/qc" element={<QC />} />
-          <Route path="/ic" element={<IC />} />
+          <Route path="/qc" element={<QC />} /> */}
+          <Route path="/" element={<IC />} />
         </Routes>
      
     </div>

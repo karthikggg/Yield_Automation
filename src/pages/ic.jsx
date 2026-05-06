@@ -187,7 +187,7 @@ function copyTable() {
           })
         }
       />
-      <select value={selected} onChange={(e) => setSelected(e.target.value)}>
+      <select className="p-2 border border-gray-300 rounded" value={selected} onChange={(e) => setSelected(e.target.value)}>
         {names &&
           names.map((name) => (
             <option key={name} value={name}>
@@ -202,17 +202,19 @@ function copyTable() {
               <th>Name</th>
               <th>Market</th>
               <th>Network</th>
-              <th>Date</th>
+              <th>% Change WoW</th>
+              <th>WO</th>
               <th>Database</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {filterNames(deduplicated).map((item) => (
-                <tr className={item.status} key={item.id}>
-                <td>{item.Name}</td>
+              <tr className={item.status} key={item.id}>
+                  <td>{item.Name}</td>
                 <td>{item.Market}</td>
                 <td>{item.Network}</td>
+                <td>{item["% Change WoW"]}</td>
                 <td>{item.WO}</td>
                 <td>{item.Database}</td>
                 <td>
@@ -239,8 +241,7 @@ function copyTable() {
             
             
         )}
-        <button onClick={copyTable} id="copyBtn">📋 Copy Table</button>
-      <div className="status-select">
+      <div className="status-select mt-14" >
          <label htmlFor="status">Filter by status: </label>
          <select id="status" onChange={(e) => setStatusFilter(e.target.value)} value={statusFilters}>
            <option value="">All</option>
@@ -250,27 +251,32 @@ function copyTable() {
            <option value="Done-by-US">Done by US</option>
          </select>
       </div>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={copyTable} id="copyBtn">📋 Copy Table</button>
       <div>
         {filterNames(filteredData).length > 0 && (
-           <table id="myTable">
+           <table  id="myTable">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Zone/IC</th>
                 <th>Market</th>
                 <th>Network</th>
-                <th>Date</th>
+                <th>% Change WoW</th>
+                <th>WO</th>
                 <th>Database</th>
+                <th>Name</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {statusFilter(statusFilters).map((item) => (
                 <tr className={item.status} key={item.id}>
-                  <td>{item.Name}</td>
+                  <td>{item["Zone/IC"]}</td>
                   <td>{item.Market}</td>
                   <td>{item.Network}</td>
+                  <td>{item["% Change WoW"]}</td>
                   <td>{item.WO}</td>
                   <td>{item.Database}</td>
+                  <td>{item.Name}</td>
                   <td>{item.status}</td>
                 </tr>
               ))}

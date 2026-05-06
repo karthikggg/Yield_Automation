@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { to: "/episodes-change", label: "Episodes Change" },
-  { to: "/rates-apply", label: "Rates Apply" },
-  { to: "/qc", label: "QC" },
-  { to: "/ic", label: "IC" },
+  // { to: "/episodes-change", label: "Episodes Change" },
+  // { to: "/rates-apply", label: "Rates Apply" },
+  // { to: "/qc", label: "QC" },
+  // { to: "/ic", label: "IC" },
 ];
 
 export const Header = () => {
