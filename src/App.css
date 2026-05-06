@@ -24,13 +24,21 @@ tbody td {
 }
 
 /* Row hover effect */
-tbody tr:hover {
-  background-color: #f9fafb;
-}
+
 
 /* Zebra striping */
-tbody tr:nth-child(even) {
-  background-color: #fcfcfc;
-}
+
 
 /* Optional: responsive overflow */
+.Pending {
+  background-color: #e44a2f !important;
+}
+.Done {
+  background-color: #70c882 !important;
+}
+.already-done-by-out-team {
+  background-color: #9381ef !important;
+}
+.Done-by-US {
+  background-color: #f9c74f !important;
+}

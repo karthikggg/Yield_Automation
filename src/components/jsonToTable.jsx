@@ -13,7 +13,9 @@ const jsonToTable = (data) => {
       <tbody>
         {data.map((item, index) => (
           <tr key={index}>
+             
             {headings.map(key => <td key={key}>{item[key]}</td>)}
+            
           </tr>
         ))}
       </tbody>
