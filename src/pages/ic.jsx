@@ -2,13 +2,11 @@ import React, { useEffect } from "react";
 import FilePicker from "../utils/chooseFile";
 import { excelToJson } from "../utils/excelToJSON";
 import { useState } from "react";
-import jsonToTable from "../components/jsonToTable";
 
 export const IC = () => {
   const [assignedFileData, setAssignedFileData] = React.useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [selected, setSelected] = useState("Pending");
-  const [mappedDB, setMappedDB] = useState([]);
   const [statusFilters, setStatusFilter] = useState("Pending");
 
   const names = [
@@ -303,7 +301,7 @@ export const IC = () => {
                 <td>
                   {item.start &&
                     item.end &&
-                    Math.round((item.end - item.start) / (1000 * 60 * 60)) + ":" + Math.round((item.end - item.start) / (1000 * 60) % 60).toString().padStart(2, '0') + ":" + Math.round((item.end - item.start) / 1000).toString().padStart(2, '0')}
+                    Math.round((item.end - item.start) / (1000 * 60 * 60)) + ":" + Math.round((item.end - item.start) / (1000 * 60) % 60).toString().padStart(2, '0') + ":" + Math.round((item.end - item.start) / 1000 % 1000).toString().padStart(2, '0')}
                 </td>
               </tr>
             ))}

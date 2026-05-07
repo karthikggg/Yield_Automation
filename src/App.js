@@ -1,10 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { Header } from './components/header';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { RATESAPPLY } from './pages/ratesApply';
-import { QC } from './pages/qc';
-import { EPISODESCHANGE } from './pages/episodesChange';
+import { BrowserRouter as  Routes, Route } from 'react-router-dom';
 import { IC } from './pages/ic';
 import { HashRouter } from 'react-router-dom';
 
