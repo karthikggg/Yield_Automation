@@ -31,14 +31,14 @@ tbody td {
 
 /* Optional: responsive overflow */
 .Pending {
-  background-color: #e44a2f !important;
+  background-color: #ff4a2a !important;
 }
 .Done {
-  background-color: #70c882 !important;
+  background-color: #99fcad !important;
 }
-.already-done-by-out-team {
-  background-color: #9381ef !important;
+.Already-done-by-our-team {
+  background-color: #baacff !important;
 }
-.Done-by-US {
-  background-color: #f9c74f !important;
+.Done-by-US-Team {
+  background-color: #ffebbc !important;
 }

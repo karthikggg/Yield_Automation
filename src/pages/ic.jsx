@@ -12,6 +12,7 @@ export const IC = () => {
   const [statusFilters, setStatusFilter] = useState("Pending");
 
   const names = [
+    "name",
     "Karthik Govindasamy",
     "Karthikeyan Panchavaranam",
     "Bala Thirupathi Raaja",
@@ -112,22 +113,23 @@ export const IC = () => {
     { Market: "Not Assigned", Database: "Not Assigned" },
   ];
 
-  
- useEffect(() => { if (assignedFileData) {
+  useEffect(() => {
+    if (assignedFileData) {
       let arr = [];
-    assignedFileData.forEach((item) => {
-      const market = item.Market;
-      const dbEntry = db.find((entry) => entry.Market === market);
-      const mergedEntry = {
-        ...item,
-        Database: dbEntry ? dbEntry.Database : "Not Found",
-        status: "",
-        id: Math.random(),
-      };
-      arr.push(mergedEntry);
-    });
-    setFilteredData(arr);
-  }}, [assignedFileData]);
+      assignedFileData.forEach((item) => {
+        const market = item.Market;
+        const dbEntry = db.find((entry) => entry.Market === market);
+        const mergedEntry = {
+          ...item,
+          Database: dbEntry ? dbEntry.Database : "Not Found",
+          status: "",
+          id: Math.random(),
+        };
+        arr.push(mergedEntry);
+      });
+      setFilteredData(arr);
+    }
+  }, [assignedFileData]);
 
   const filterNames = (data) => {
     const filteredData = data.filter((item) => item.Name === selected);
@@ -137,45 +139,68 @@ export const IC = () => {
   const handleStatusChange = (item, newStatus) => {
     setFilteredData((prevItems) =>
       prevItems.map((i) =>
-        i.Database === item.Database && i.Name === item.Name && i.Network === item.Network && i.WO === item.WO ? { ...i, status: newStatus } : i
-      )
+        i.Database === item.Database &&
+        i.Name === item.Name &&
+        i.Network === item.Network &&
+        i.WO === item.WO
+          ? { ...i, status: newStatus }
+          : i,
+      ),
     );
-    
-};
-const seen = new Set();
-const deduplicated = filteredData.filter(obj => {
-  const key = `${obj.Database}|${obj.WO}|${obj.Network}`;
-  if (seen.has(key)) return false;
-  seen.add(key);
-  return true;
-});
-console.log(filterNames(filteredData));
-
-const statusFilter = (status) => {
-  return filterNames(filteredData).filter(item => item.status === status);
-}
-function copyTable() {
-  const table = document.getElementById('myTable');
-  const rows = table.querySelectorAll('tbody tr');
-  
-  let html = '<table><tr>';
-  rows.forEach(row => {
-    html += '<tr>';
-    row.querySelectorAll('td').forEach(cell => {
-      html += `<td>${cell.textContent}</td>`;
-    });
-    html += '</tr>';
+  };
+  const seen = new Set();
+  const deduplicated = filteredData.filter((obj) => {
+    const key = `${obj.Database}|${obj.WO}|${obj.Network}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
-  html += '</table>';
+  console.log(filterNames(filteredData));
+
+  const statusFilter = (status) => {
+    return filterNames(filteredData).filter((item) => item.status === status);
+  };
+ function copyTable(tableName , columnsToSkip) {
+  const table = document.getElementById(tableName);
+  const rows = table.querySelectorAll("tbody tr");
   
-  // Copy as HTML (not plain text)
-  const blob = new Blob([html], { type: 'text/html' });
-  navigator.clipboard.write([
-    new ClipboardItem({ 'text/html': blob })
-  ]);
-  
-  alert('Copied!');
+  // Columns to skip (0-based index)
+  // In your table: Status is the last column (index 7)
+  const skipColumns = columnsToSkip; // Skip the Status column (8th column)
+
+  let html = "<table><tr>";
+  rows.forEach((row) => {
+    html += "<tr>";
+    row.querySelectorAll("td").forEach((cell, index) => {
+      // Skip if this column index is in skipColumns
+      if (!skipColumns.includes(index)) {
+        html += `<td>${cell.textContent}</td>`;
+      }
+    });
+    html += "</tr>";
+  });
+  html += "</table>";
+
+  const blob = new Blob([html], { type: "text/html" });
+  navigator.clipboard.write([new ClipboardItem({ "text/html": blob })]);
+
+  alert("Copied!");
 }
+  const handleStartTimerClick = (item) => {
+    setFilteredData((prevItems) =>
+      prevItems.map((i) =>
+        i.id === item.id ? { ...i, timerActive: true, start:  new Date() , end: new Date()} : i,
+      ),
+    );
+  };
+  const handleEndTimerClick = (item) => {
+    setFilteredData((prevItems) =>
+      prevItems.map((i) =>
+        i.id === item.id ? { ...i, timerActive: false, end: new Date() } : i,
+      ),
+    );
+  };
+
   return (
     <div>
       <FilePicker
@@ -187,7 +212,11 @@ function copyTable() {
           })
         }
       />
-      <select className="p-2 border border-gray-300 rounded" value={selected} onChange={(e) => setSelected(e.target.value)}>
+      <select
+        className="p-2 border border-gray-300 rounded"
+        value={selected}
+        onChange={(e) => setSelected(e.target.value)}
+      >
         {names &&
           names.map((name) => (
             <option key={name} value={name}>
@@ -195,23 +224,36 @@ function copyTable() {
             </option>
           ))}
       </select>
+       <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => copyTable("my-table-2", [7,8])}
+        id="copyBtn"
+      >
+        📋 Copy Table
+      </button>
       {filteredData && (
-          <table>
+        <table id="my-table-2">
           <thead>
             <tr>
               <th>Name</th>
+              <th>Zone/IC</th>
               <th>Market</th>
               <th>Network</th>
               <th>% Change WoW</th>
               <th>WO</th>
               <th>Database</th>
               <th>Status</th>
+              <th>Timer</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>overall Time</th>
             </tr>
           </thead>
           <tbody>
-            {filterNames(deduplicated).map((item) => (
+            {filterNames(deduplicated).sort((a, b) => a.Database.localeCompare(b.Database)).map((item) => (
               <tr className={item.status} key={item.id}>
-                  <td>{item.Name}</td>
+                <td>{item.Name}</td>
+                <td>{item["Zone/IC"]}</td>
                 <td>{item.Market}</td>
                 <td>{item.Network}</td>
                 <td>{item["% Change WoW"]}</td>
@@ -221,40 +263,80 @@ function copyTable() {
                   <select
                     name=""
                     id=""
-                    onChange={(e) =>
-                        handleStatusChange(item , e.target.value)
+                    onChange={(e) => handleStatusChange(item, e.target.value)}
+                    value={
+                      item.status === "already done by out team"
+                        ? "already-done-by-out-team"
+                        : item.status
                     }
-                    value={item.status === "already done by out team" ? "already-done-by-out-team" : item.status }
                   >
                     <option value="Pending">Pending</option>
                     <option value="Done">Done</option>
-                    <option value="already-done-by-out-team">
-                      already-done-by-out-team
+                    <option value="Already-done-by-our-team">
+                      Already-done-by-our-team
                     </option>
-                    <option value="Done-by-US">Done-by-US</option>
+                    <option value="Done-by-US-Team">Done-by-US-Team</option>
                   </select>
+                </td>
+                <td>
+                  <button
+                  className={`px-2 py-1 rounded ${item.timerActive ? "bg-green-500 text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                    }`}
+                    onClick={() => {
+                      handleStartTimerClick(item);
+                    }}
+                  >
+                    {item.timerActive ? "Running..." : "Start"}
+                  </button>
+                  <button
+                    className={`ml-2 px-2 py-1 rounded ${!item.timerActive ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                      }`}
+                    onClick={() => {
+                      handleEndTimerClick(item);
+                    }}
+                  >
+                    End
+                  </button>
+                </td>
+                <td>{item.start ? item.start.toLocaleTimeString() : ""}</td>
+                <td>{item.end ? item.end.toLocaleTimeString() : ""}</td>
+                <td>
+                  {item.start &&
+                    item.end &&
+                    Math.round((item.end - item.start) / (1000 * 60 * 60)) + ":" + Math.round((item.end - item.start) / (1000 * 60) % 60).toString().padStart(2, '0') + ":" + Math.round((item.end - item.start) / 1000).toString().padStart(2, '0')}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-            
-            
-        )}
-      <div className="status-select mt-14" >
-         <label htmlFor="status">Filter by status: </label>
-         <select id="status" onChange={(e) => setStatusFilter(e.target.value)} value={statusFilters}>
-           <option value="">All</option>
-           <option value="Pending">Pending</option>
-           <option value="Done">Done</option>
-           <option value="already-done-by-out-team">Already Done by Out Team</option>
-           <option value="Done-by-US">Done by US</option>
-         </select>
+      )}
+      <div className="status-select mt-14 mb-4">
+        <label htmlFor="status">Filter by status: </label>
+        <select
+          id="status"
+          onChange={(e) => setStatusFilter(e.target.value)}
+          value={statusFilters}
+          className="p-2 border border-gray-300 rounded"
+        >
+          <option value="">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Done">Done</option>
+          <option value="already-done-by-out-team">
+            Already Done by Out Team
+          </option>
+          <option value="Done-by-US">Done by US</option>
+        </select>
       </div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={copyTable} id="copyBtn">📋 Copy Table</button>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => copyTable("myTable", [47])}
+        id="copyBtn"
+      >
+        📋 Copy Table
+      </button>
       <div>
         {filterNames(filteredData).length > 0 && (
-           <table  id="myTable">
+          <table id="myTable">
             <thead>
               <tr>
                 <th>Zone/IC</th>
@@ -268,7 +350,7 @@ function copyTable() {
               </tr>
             </thead>
             <tbody>
-              {statusFilter(statusFilters).map((item) => (
+              {statusFilter(statusFilters).sort((a, b) => a.Database.localeCompare(b.Database)).map((item) => (
                 <tr className={item.status} key={item.id}>
                   <td>{item["Zone/IC"]}</td>
                   <td>{item.Market}</td>
@@ -281,7 +363,8 @@ function copyTable() {
                 </tr>
               ))}
             </tbody>
-          </table>        )}
+          </table>
+        )}
       </div>
     </div>
   );
