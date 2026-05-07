@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Yield-Tracker/static/css/main.b71744ad.css",
+    "main.js": "/Yield-Tracker/static/js/main.343b8e4c.js",
+    "static/js/453.2ff91274.chunk.js": "/Yield-Tracker/static/js/453.2ff91274.chunk.js",
+    "static/media/logo.svg": "/Yield-Tracker/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/Yield-Tracker/index.html",
+    "main.b71744ad.css.map": "/Yield-Tracker/static/css/main.b71744ad.css.map",
+    "main.343b8e4c.js.map": "/Yield-Tracker/static/js/main.343b8e4c.js.map",
+    "453.2ff91274.chunk.js.map": "/Yield-Tracker/static/js/453.2ff91274.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b71744ad.css",
+    "static/js/main.343b8e4c.js"
+  ]
+}
