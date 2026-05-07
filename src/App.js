@@ -12,7 +12,7 @@ import { HashRouter } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <HashRouter basename="/Yield-Tracker">
+      <HashRouter basename="/Yield_Automation">
       <Header />
         <Routes>
           {/* <Route path="/episodes-change" element={<EPISODESCHANGE />} />
