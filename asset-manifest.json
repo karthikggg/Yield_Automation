@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Yield-Tracker/static/css/main.2a3d1526.css",
-    "main.js": "/Yield-Tracker/static/js/main.0fde26cf.js",
-    "static/js/453.2ff91274.chunk.js": "/Yield-Tracker/static/js/453.2ff91274.chunk.js",
-    "static/media/logo.svg": "/Yield-Tracker/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/Yield-Tracker/index.html",
-    "main.2a3d1526.css.map": "/Yield-Tracker/static/css/main.2a3d1526.css.map",
-    "main.0fde26cf.js.map": "/Yield-Tracker/static/js/main.0fde26cf.js.map",
-    "453.2ff91274.chunk.js.map": "/Yield-Tracker/static/js/453.2ff91274.chunk.js.map"
+    "main.css": "/Yield_Automation/static/css/main.2a3d1526.css",
+    "main.js": "/Yield_Automation/static/js/main.f84062b2.js",
+    "static/js/453.2ff91274.chunk.js": "/Yield_Automation/static/js/453.2ff91274.chunk.js",
+    "static/media/logo.svg": "/Yield_Automation/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/Yield_Automation/index.html",
+    "main.2a3d1526.css.map": "/Yield_Automation/static/css/main.2a3d1526.css.map",
+    "main.f84062b2.js.map": "/Yield_Automation/static/js/main.f84062b2.js.map",
+    "453.2ff91274.chunk.js.map": "/Yield_Automation/static/js/453.2ff91274.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2a3d1526.css",
-    "static/js/main.0fde26cf.js"
+    "static/js/main.f84062b2.js"
   ]
 }
