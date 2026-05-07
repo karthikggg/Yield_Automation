@@ -321,15 +321,15 @@ export const IC = () => {
           <option value="">All</option>
           <option value="Pending">Pending</option>
           <option value="Done">Done</option>
-          <option value="already-done-by-out-team">
-            Already Done by Out Team
+          <option value="already-done-by-our-team">
+            Already Done by Our Team
           </option>
-          <option value="Done-by-US">Done by US</option>
+          <option value="Done-by-US-Team">Done by US Team</option>
         </select>
       </div>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => copyTable("myTable", [47])}
+        onClick={() => copyTable("myTable")}
         id="copyBtn"
       >
         📋 Copy Table
