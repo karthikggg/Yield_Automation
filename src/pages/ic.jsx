@@ -319,7 +319,7 @@ export const IC = () => {
           <option value="">All</option>
           <option value="Pending">Pending</option>
           <option value="Done">Done</option>
-          <option value="already-done-by-our-team">
+          <option value="Already-done-by-our-team">
             Already Done by Our Team
           </option>
           <option value="Done-by-US-Team">Done by US Team</option>

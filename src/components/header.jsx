@@ -22,7 +22,7 @@ export const Header = () => {
             <span className="text-white font-bold text-sm">YA</span>
           </div>
           <span className="text-white font-semibold text-lg tracking-tight">
-            Yield <span className="text-emerald-400">Auto</span>
+            Inventery <span className="text-emerald-400">Logistics</span>
           </span>
         </Link>
 

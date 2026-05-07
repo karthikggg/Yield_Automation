@@ -1,27 +1,31 @@
-import './App.css';
-import { Header } from './components/header';
-import { BrowserRouter as  Routes, Route } from 'react-router-dom';
-import { IC } from './pages/ic';
-import { HashRouter } from 'react-router-dom';
-
+import logo from "./logo.svg";
+import "./App.css";
+import { Header } from "./components/header";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  HashRouter,
+} from "react-router-dom";
+import { RATESAPPLY } from "./pages/ratesApply";
+import { QC } from "./pages/qc";
+import { EPISODESCHANGE } from "./pages/episodesChange";
+import { IC } from "./pages/ic";
 
 function App() {
   return (
     <div className="App">
-      <HashRouter>
-      <Header />
-        <Routes>
-          {/* <Route path="/episodes-change" element={<EPISODESCHANGE />} />
-          <Route path="/rates-apply" element={<RATESAPPLY />} />
-          <Route path="/qc" element={<QC />} /> */}
-          <Route path="/" element={<IC />} />
+    
+        <Header />
+         <Routes>
+        {/* <Route path="/episodes-change" element={<EPISODESCHANGE />} /> */}
+        {/* <Route path="/rates-apply" element={<RATESAPPLY />} /> */}
+        {/* <Route path="/qc" element={<QC />} /> */}
+        <Route path="/" element={<IC />} />
         </Routes>
-      </HashRouter>
-     
+      
     </div>
   );
 }
-
-
 
 export default App;
