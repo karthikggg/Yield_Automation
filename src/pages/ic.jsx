@@ -109,26 +109,26 @@ export const IC = () => {
     { Market: "WILKES-BARRE", Database: "LIBERTY" },
     { Market: "Youngstown", Database: "LIBERTY" },
     { Market: "Not Assigned", Database: "Not Assigned" },
+    { Market: "Chicago U-verse", Database: "CHICAGO" },
   ];
-  
 
-// Save to localStorage whenever filteredData changes
-useEffect(() => {
-  if (filteredData.length > 0) {
-    console.log('Saving:', filteredData.length, 'items');
-    localStorage.setItem('filteredData', JSON.stringify(filteredData));
-  }
-}, [filteredData]);
+  // Save to localStorage whenever filteredData changes
+  useEffect(() => {
+    if (filteredData.length > 0) {
+      console.log("Saving:", filteredData.length, "items");
+      localStorage.setItem("filteredData", JSON.stringify(filteredData));
+    }
+  }, [filteredData]);
 
-// Load from localStorage on component mount
-useEffect(() => {
-  const saved = localStorage.getItem('filteredData');
-  if (saved) {
-    console.log("saved");
-    console.log(saved);
-    setFilteredData(JSON.parse(saved));
-  }
-}, []);
+  // Load from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem("filteredData");
+    if (saved) {
+      console.log("saved");
+      console.log(saved);
+      setFilteredData(JSON.parse(saved));
+    }
+  }, []);
 
   useEffect(() => {
     if (assignedFileData) {
@@ -147,7 +147,6 @@ useEffect(() => {
       setFilteredData(arr);
     }
   }, [assignedFileData]);
-
 
   const filterNames = (data) => {
     const filteredData = data.filter((item) => item.Name === selected);
@@ -178,42 +177,44 @@ useEffect(() => {
   const statusFilter = (status) => {
     return filterNames(filteredData).filter((item) => item.status === status);
   };
- function copyTable(tableName , columnsToSkip) {
-  if(filterNames(filteredData).length === 0){
-    alert("No data to copy!");
-    return;
-  }
-  const table = document.getElementById(tableName);
-  const rows = table.querySelectorAll("tbody tr");
-  
-  // Columns to skip (0-based index)
-  // In your table: Status is the last column (index 7)
-  const skipColumns = columnsToSkip; // Skip the Status column (8th column)
+  function copyTable(tableName, columnsToSkip) {
+    if (filterNames(filteredData).length === 0) {
+      alert("No data to copy!");
+      return;
+    }
+    const table = document.getElementById(tableName);
+    const rows = table.querySelectorAll("tbody tr");
 
-  let html = "<table><tr>";
-  rows.forEach((row) => {
-    html += "<tr>";
-    row.querySelectorAll("td").forEach((cell, index) => {
-      // Skip if this column index is in skipColumns
-      if (!skipColumns.includes(index)) {
-        const select = cell.querySelector("select");
-        const cellText = select ? select.value : cell.textContent;
-        html += `<td>${cellText}</td>`;
-      }
+    // Columns to skip (0-based index)
+    // In your table: Status is the last column (index 7)
+    const skipColumns = columnsToSkip; // Skip the Status column (8th column)
+
+    let html = "<table>";
+    rows.forEach((row) => {
+      html += "<tr>";
+      row.querySelectorAll("td").forEach((cell, index) => {
+        // Skip if this column index is in skipColumns
+        if (!skipColumns.includes(index)) {
+          const select = cell.querySelector("select");
+          const cellText = select ? select.value : cell.textContent;
+          html += `<td>${cellText}</td>`;
+        }
+      });
+      html += "</tr>";
     });
-    html += "</tr>";
-  });
-  html += "</table>";
+    html += "</table>";
 
-  const blob = new Blob([html], { type: "text/html" });
-  navigator.clipboard.write([new ClipboardItem({ "text/html": blob })]);
+    const blob = new Blob([html], { type: "text/html" });
+    navigator.clipboard.write([new ClipboardItem({ "text/html": blob })]);
 
-  alert("Copied!");
-}
+    alert("Copied!");
+  }
   const handleStartTimerClick = (item) => {
     setFilteredData((prevItems) =>
       prevItems.map((i) =>
-        i.id === item.id ? { ...i, timerActive: true, start:  new Date() , end: new Date()} : i,
+        i.id === item.id
+          ? { ...i, timerActive: true, start: new Date(), end: new Date() }
+          : i,
       ),
     );
   };
@@ -225,18 +226,18 @@ useEffect(() => {
     );
   };
   function formatTimeDifference(start, end) {
-  if (!start || !end) return "";
-  
-  const diffMs = end - start; // Milliseconds
-  const diffSeconds = Math.floor(diffMs / 1000);
-  
-  const hours = Math.floor(diffSeconds / 3600);
-  const minutes = Math.floor((diffSeconds % 3600) / 60);
-  const seconds = diffSeconds % 60;
-  
-  // Pad with zeros (01:23:45)
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
+    if (!start || !end) return "";
+
+    const diffMs = end - start; // Milliseconds
+    const diffSeconds = Math.floor(diffMs / 1000);
+
+    const hours = Math.floor(diffSeconds / 3600);
+    const minutes = Math.floor((diffSeconds % 3600) / 60);
+    const seconds = diffSeconds % 60;
+
+    // Pad with zeros (01:23:45)
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
 
   return (
     <div>
@@ -261,9 +262,9 @@ useEffect(() => {
             </option>
           ))}
       </select>
-       <button
+      <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => copyTable("my-table-2", [8])}
+        onClick={() => copyTable("my-table-2", [7])}
         id="copyBtn"
       >
         📋 Copy Table
@@ -273,29 +274,28 @@ useEffect(() => {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Zone/IC</th>
               <th>Market</th>
-              <th>Network</th>
-              <th>% Change WoW</th>
-              <th>WO</th>
               <th>Database</th>
+              <th>WO</th>
+              <th>Network</th>
+              <th>Zone/IC</th>
               <th>Status</th>
               <th>Timer</th>
               <th>Start</th>
               <th>End</th>
               <th>overall Time</th>
+              <th>% Change WoW</th>
             </tr>
           </thead>
           <tbody>
-            {filterNames(deduplicated).sort((a, b) => a.Database.localeCompare(b.Database)).map((item) => (
+            {filterNames(deduplicated).map((item) => (
               <tr className={item.status} key={item.id}>
                 <td>{item.Name}</td>
-                <td>{item["Zone/IC"]}</td>
                 <td>{item.Market}</td>
-                <td>{item.Network}</td>
-                <td>{item["% Change WoW"]}</td>
-                <td>{item.WO}</td>
                 <td>{item.Database}</td>
+                <td>{item.WO}</td>
+                <td>{item.Network}</td>
+                <td>{item["Zone/IC"]}</td>
                 <td>
                   <select
                     name=""
@@ -313,11 +313,17 @@ useEffect(() => {
                       Already-done-by-our-team
                     </option>
                     <option value="Done-by-US-Team">Done-by-US-Team</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Others">Others</option>
                   </select>
                 </td>
+
                 <td>
                   <button
-                  className={`px-2 py-1 rounded ${item.timerActive ? "bg-green-500 text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                    className={`px-2 py-1 rounded ${
+                      item.timerActive
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-300 text-gray-700 hover:bg-gray-400"
                     }`}
                     onClick={() => {
                       handleStartTimerClick(item);
@@ -326,8 +332,11 @@ useEffect(() => {
                     {item.timerActive ? "Running..." : "Start"}
                   </button>
                   <button
-                    className={`ml-2 px-2 py-1 rounded ${!item.timerActive ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"
-                      }`}
+                    className={`ml-2 px-2 py-1 rounded ${
+                      !item.timerActive
+                        ? "bg-red-500 text-white"
+                        : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                    }`}
                     onClick={() => {
                       handleEndTimerClick(item);
                     }}
@@ -335,13 +344,21 @@ useEffect(() => {
                     End
                   </button>
                 </td>
-                <td>{item.start ? new Date(item.start).toLocaleTimeString() : ""}</td>
-                <td>{item.end ? new Date(item.end).toLocaleTimeString() : ""}</td>
+                <td>
+                  {item.start ? new Date(item.start).toLocaleTimeString() : ""}
+                </td>
+                <td>
+                  {item.end ? new Date(item.end).toLocaleTimeString() : ""}
+                </td>
                 <td>
                   {item.start &&
                     item.end &&
-                    formatTimeDifference(new Date(item.start), new Date(item.end))}
+                    formatTimeDifference(
+                      new Date(item.start),
+                      new Date(item.end),
+                    )}
                 </td>
+                <td>{item["% Change WoW"]}</td>
               </tr>
             ))}
           </tbody>
@@ -362,11 +379,12 @@ useEffect(() => {
             Already Done by Our Team
           </option>
           <option value="Done-by-US-Team">Done by US Team</option>
+          <option value="Others">Others</option>
         </select>
       </div>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => copyTable("myTable" ,[])}
+        onClick={() => copyTable("myTable", [])}
         id="copyBtn"
       >
         📋 Copy Table
@@ -376,29 +394,50 @@ useEffect(() => {
           <table id="myTable">
             <thead>
               <tr>
-                <th>Zone/IC</th>
-                <th>Market</th>
-                <th>Network</th>
-                <th>% Change WoW</th>
-                <th>WO</th>
-                <th>Database</th>
                 <th>Name</th>
+                <th>Market</th>
+                <th>Database</th>
+                <th>WO</th>
+                <th>Network</th>
+                <th>Zone/IC</th>
                 <th>Status</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>overall Time</th>
+                <th>% Change WoW</th>
               </tr>
             </thead>
             <tbody>
-              {statusFilter(statusFilters).sort((a, b) => a.Database.localeCompare(b.Database)).map((item) => (
-                <tr className={item.status} key={item.id}>
-                  <td>{item["Zone/IC"]}</td>
-                  <td>{item.Market}</td>
-                  <td>{item.Network}</td>
-                  <td>{item["% Change WoW"]}</td>
-                  <td>{item.WO}</td>
-                  <td>{item.Database}</td>
-                  <td>{item.Name}</td>
-                  <td>{item.status}</td>
-                </tr>
-              ))}
+              {statusFilter(statusFilters)
+                .sort((a, b) => a.Database.localeCompare(b.Database))
+                .map((item) => (
+                  <tr className={item.status} key={item.id}>
+                    <td>{item.Name}</td>
+                    <td>{item.Market}</td>
+                    <td>{item.Database}</td>
+                    <td>{item.WO}</td>
+                    <td>{item.Network}</td>
+                    <td>{item["Zone/IC"]}</td>
+                    <td>{item.status}</td>
+                    <td>
+                      {item.start
+                        ? new Date(item.start).toLocaleTimeString()
+                        : ""}
+                    </td>
+                    <td>
+                      {item.end ? new Date(item.end).toLocaleTimeString() : ""}
+                    </td>
+                    <td>
+                      {item.start &&
+                        item.end &&
+                        formatTimeDifference(
+                          new Date(item.start),
+                          new Date(item.end),
+                        )}
+                    </td>
+                    <td>{item["% Change WoW"]}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}
