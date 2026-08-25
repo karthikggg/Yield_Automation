@@ -379,6 +379,7 @@ export const IC = () => {
             Already Done by Our Team
           </option>
           <option value="Done-by-US-Team">Done by US Team</option>
+          <option value="Manual">Manual</option>
           <option value="Others">Others</option>
         </select>
       </div>
@@ -394,17 +395,17 @@ export const IC = () => {
           <table id="myTable">
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Market</th>
-                <th>Database</th>
-                <th>WO</th>
                 <th>Network</th>
-                <th>Zone/IC</th>
+                <th>% Change WoW</th>
+                <th>WO</th>
                 <th>Status</th>
+                <th>Database</th>
+                <th>Zone/IC</th>
+                {/* <th>Name</th> */}
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>overall Time</th>
-                <th>% Change WoW</th>
               </tr>
             </thead>
             <tbody>
@@ -412,13 +413,14 @@ export const IC = () => {
                 .sort((a, b) => a.Database.localeCompare(b.Database))
                 .map((item) => (
                   <tr className={item.status} key={item.id}>
-                    <td>{item.Name}</td>
+                    {/* <td>{item.Name}</td> */}
                     <td>{item.Market}</td>
-                    <td>{item.Database}</td>
-                    <td>{item.WO}</td>
                     <td>{item.Network}</td>
-                    <td>{item["Zone/IC"]}</td>
+                      <td>{item["% Change WoW"]}</td>
+                    <td>{item.WO}</td>
                     <td>{item.status}</td>
+                    {/* <td>{item["Zone/IC"]}</td> */}
+                    <td>{item.Database}</td>
                     <td>
                       {item.start
                         ? new Date(item.start).toLocaleTimeString()
@@ -435,7 +437,6 @@ export const IC = () => {
                           new Date(item.end),
                         )}
                     </td>
-                    <td>{item["% Change WoW"]}</td>
                   </tr>
                 ))}
             </tbody>
