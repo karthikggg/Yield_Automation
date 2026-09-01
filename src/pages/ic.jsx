@@ -288,7 +288,7 @@ export const IC = () => {
             </tr>
           </thead>
           <tbody>
-            {filterNames(deduplicated).map((item) => (
+            {filterNames(deduplicated).sort((a, b) => a["Database"].localeCompare(b["Database"])).map((item) => (
               <tr className={item.status} key={item.id}>
                 <td>{item.Name}</td>
                 <td>{item.Market}</td>
@@ -410,7 +410,7 @@ export const IC = () => {
             </thead>
             <tbody>
               {statusFilter(statusFilters)
-                .sort((a, b) => a.Database.localeCompare(b.Database))
+                .sort((a, b) => a["Database"].localeCompare(b["Database"]))
                 .map((item) => (
                   <tr className={item.status} key={item.id}>
                     {/* <td>{item.Name}</td> */}
